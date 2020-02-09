@@ -11,7 +11,7 @@ class Image
 public:
     Image();
 
-    const QImage& operator[](const QString& name);
+    QImage& operator[](const QString& name);
 
 };
 

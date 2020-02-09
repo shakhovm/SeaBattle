@@ -14,7 +14,8 @@ Player::Player(string name, bool is_computer)
 
 Player::~Player()
 {
-
+    delete first_shoot;
+    delete last_shoot;
 }
 
 void Player::shoot(Field& field, P position)
@@ -32,6 +33,7 @@ void Player::shoot(Field& field, P position)
 bool Player::random_shoot(Field& field)
 {
     vector<P> potential_positions;
+    std::default_random_engine generator(std::chrono::system_clock::now().time_since_epoch().count());
     if(last_shoot != nullptr)
     {
 
@@ -53,7 +55,8 @@ bool Player::random_shoot(Field& field)
             last_shoot = first_shoot;
             return random_shoot(field);
         }
-        P choice = potential_positions[qrand() % potential_positions.size()];
+        std::uniform_int_distribution<int> distribution(0, potential_positions.size() - 1);
+        P choice = potential_positions[distribution(generator)];
 
         field.shoot(choice);
 
@@ -115,7 +118,9 @@ bool Player::random_shoot(Field& field)
 
         }
     }
-    P position = potential_positions[qrand() % potential_positions.size()];
+    std::uniform_int_distribution<int> distribution(0, potential_positions.size() - 1);
+
+    P position = potential_positions[distribution(generator)];
     field.shoot(position);
     if(field.is_ship(position) && !field.is_destroyed(position))
     {

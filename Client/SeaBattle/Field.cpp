@@ -32,18 +32,15 @@ Field::Field()
     clear();
 }
 
-Field::~Field()
-{
-}
 
 void Field::set_ship(Ship& ship)
 {
     for(int i = 0; i < ship.size(); ++i)
     {
 
-
         field[ship.fields[i].first][ship.fields[i].second] = ship;
         POSITIONS.push_back(ship.fields[i]);
+
     }
 }
 
@@ -108,36 +105,56 @@ bool Field::is_valid(Ship& ship)
 
 bool Field::create_field(int size)
 {
-    //std::default_random_engine generator(std::chrono::system_clock::now().time_since_epoch().count());
-    //std::uniform_int_distribution<int> distribution(0, 9);
-    //int row = distribution(generator);
-    //int col = distribution(generator);
-    int row = qrand() % 10;
-    int col = qrand() % 10;
-    vector<Ship> all_ships;
-    vector<pair<P, P>> positions = {pair<P, P>(P(row, col), P(row + size - 1, col)),
-                                    pair<P, P>(P(row - size + 1, col), P(row, col)),
-                                    pair<P, P>(P(row, col), P(row, col + size - 1)),
-                                    pair<P, P>(P(row, col - size + 1), P(row, col))};
-    for(auto& position: positions)
-    {
-        if(valid_position(position.first) && valid_position(position.second))
-        {
-            Ship ship(position.first, position.second);
+    std::default_random_engine generator(std::chrono::system_clock::now().time_since_epoch().count());
 
-            if(is_valid(ship))
+//    int row = distribution(generator);
+//    int col = distribution(generator);
+//    int row = qrand() % 10;
+//    int col = qrand() % 10;
+    vector<Ship> all_ships;
+    vector<P> possible_possions;
+    for (int row = 0; row < 10; ++row) {
+        for (int col = 0; col < 10; ++col) {
+            vector<pair<P, P>> positions = {pair<P, P>(P(row, col), P(row + size - 1, col)),
+                                            pair<P, P>(P(row, col), P(row, col + size - 1))};
+            for(auto& position: positions)
             {
-                all_ships.push_back(ship);
+                if(valid_position(position.first) && valid_position(position.second))
+                {
+                    Ship ship(position.first, position.second);
+
+                    if(is_valid(ship))
+                    {
+                        all_ships.push_back(ship);
+                    }
+                }
             }
         }
     }
+//    vector<pair<P, P>> positions = {pair<P, P>(P(row, col), P(row + size - 1, col)),
+//                                    pair<P, P>(P(row - size + 1, col), P(row, col)),
+//                                    pair<P, P>(P(row, col), P(row, col + size - 1)),
+//                                    pair<P, P>(P(row, col - size + 1), P(row, col))};
+//    for(auto& position: positions)
+//    {
+//        if(valid_position(position.first) && valid_position(position.second))
+//        {
+//            Ship ship(position.first, position.second);
+
+//            if(is_valid(ship))
+//            {
+//                all_ships.push_back(ship);
+//            }
+//        }
+//    }
     if(all_ships.empty())
     {
         return false;
     }
 
-    int choice = qrand() % all_ships.size();
-
+    //int choice = qrand() % all_ships.size();
+    std::uniform_int_distribution<int> distribution(0, all_ships.size() - 1);
+    int choice = distribution(generator);
     set_ship(all_ships[choice]);
     return true;
 }
@@ -148,7 +165,7 @@ void Field::generate_field()
     vector<int> sizes = {4, 3, 3, 2, 2, 2, 1, 1, 1, 1};
     for(auto& size: sizes)
     {
-        while(!create_field(size));
+        create_field(size);
     }
 }
 
@@ -162,11 +179,8 @@ void Field::show()
 
 void Field::clear()
 {
-    field = new Ship*[10];
     for(int i = 0; i < 10; ++i)
     {
-
-        field[i] = new Ship[10];
 
         for(int j = 0; j < 10; ++j)
         {

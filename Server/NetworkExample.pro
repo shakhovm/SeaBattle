@@ -1,14 +1,14 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2019-06-30T13:10:53
+# Project created by QtCreator 2020-02-08T17:48:00
 #
 #-------------------------------------------------
 
 QT       += core gui
-
+QT       += network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = SeaBattle
+TARGET = NetworkExample
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -25,37 +25,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
-        SeaBattle/Field.cpp \
-        SeaBattle/game.cpp \
-        SeaBattle/player.cpp \
-        SeaBattle/ship.cpp \
-        image.cpp \
         main.cpp \
         mainwindow.cpp
 
 HEADERS += \
-        SeaBattle/Field.h \
-        SeaBattle/game.h \
-        SeaBattle/player.h \
-        SeaBattle/ship.h \
-        config.h \
-        image.h \
-        mainwindow.h
+        mainwindow.h \
+        room.h
 
 FORMS += \
         mainwindow.ui
-
-RESOURCES +=\
-        Images/redCell.png\
-        Images/Field.png\
-        Images/Cell.png\
-        Images/1500.png\
-        Images/real_field.png\
-        Images/red_cell.png\
-        Images/blue_cell.png\
-        Images/white_cell.png\
-        Images/orange_cell.png
-
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

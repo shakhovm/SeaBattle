@@ -9,18 +9,19 @@
 #include "player.h"
 
 class Game {
-    vector<Player> players;
+    Player* alPlayer;
+    Player* enemyPlayer;
     int current_player = 0;
 public:
-    Game() = default;
+    Game(): alPlayer(nullptr), enemyPlayer(nullptr){}
     bool game_over(Field& field);
-    void change_player();
-    void previous_player();
-    Player& get_current_player();
-    void add_player(Player player);
-    Field& current_field();
+    Player* get_alPlayer();
+    Player* get_enemyPlayer();
+    void set_alPlayer(Player* player);
+    void set_enemyPlayer(Player* player);
     Field& enemy_field();
-    void clear();
+    Field& al_field();
+
 
 };
 

@@ -21,12 +21,17 @@ class Field {
 
 
 public:
+    Ship field[10][10];
     vector<P> POSITIONS;
     vector<P> shoot_positions;
+    vector<P> valid_positions;
     int destroyed_ships = 0;
+
+
+
     Field();
-    ~Field();
-    Ship** field;
+    ~Field() = default;
+
     void set_ship(Ship& ship);
     void shoot(P position);
     inline bool is_shot(const P& position) { return field[position.first][position.second].shot(position); }

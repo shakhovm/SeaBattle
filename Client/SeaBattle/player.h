@@ -15,6 +15,8 @@ class Player {
     P* first_shoot = nullptr;
     P* last_shoot = nullptr;
 public:
+
+
     Field rival_field;
     Field field;
     string name;

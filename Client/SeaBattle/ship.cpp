@@ -113,7 +113,6 @@ bool Ship::shot(P position)
     return false;
 }
 
-Ship::~Ship(){}
 
 int Ship::size()
 {

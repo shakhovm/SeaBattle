@@ -31,8 +31,7 @@ public:
     vector<P> fields;
     Ship();// = default;
     Ship(P first_position, P last_position, bool is_ship = true);
-
-    ~Ship();
+    ~Ship() = default;
     int size();
     void print();
     bool shot(P position);
